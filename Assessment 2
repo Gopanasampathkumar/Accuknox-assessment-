@@ -1,1 +1,41 @@
+import psutil
 
+# Define thresholds (adjust as needed)
+CPU_THRESHOLD = 80  # Percentage
+MEMORY_THRESHOLD = 90  # Percentage
+DISK_THRESHOLD = 80  # Percentage
+
+def check_system_health():
+    cpu_percent = psutil.cpu_percent()
+    memory_percent = psutil.virtual_memory().percent
+    disk_percent = psutil.disk_usage('/').percent
+
+    if cpu_percent > CPU_THRESHOLD:
+        print(f"CPU usage is high: {cpu_percent}%")
+        # You can add logic here to send an alert (e.g., via email or log file)
+
+    if memory_percent > MEMORY_THRESHOLD:
+        print(f"Memory usage is high: {memory_percent}%")
+        # Add alert logic here
+
+    if disk_percent > DISK_THRESHOLD:
+        print(f"Disk space usage is high: {disk_percent}%")
+        # Add alert logic here
+
+if __name__ == "__main__":
+    check_system_health()
+
+import shutil
+import os
+
+def backup_directory(source_dir, destination_dir):
+    try:
+        shutil.copytree(source_dir, destination_dir)
+        print(f"Backup successful: {source_dir} -> {destination_dir}")
+    except Exception as e:
+        print(f"Backup failed: {e}")
+
+if __name__ == "__main__":
+    source_directory = "/path/to/source/directory"
+    destination_directory = "/path/to/backup/location"
+    backup_directory(source_directory, destination_directory)
